@@ -33,11 +33,6 @@ export default function ShaderBackground() {
       precision highp float;
       uniform vec2 resolution;
       uniform float time;
-      uniform vec2 mouse;
-
-      float noise(vec2 st) {
-        return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-      }
 
       void main() {
         vec2 uv = gl_FragCoord.xy / resolution.xy;
@@ -47,17 +42,6 @@ export default function ShaderBackground() {
         float wave2 = cos(uv.y * 4.0 - time * 0.3) * 0.5 + 0.5;
         float wave3 = sin((uv.x + uv.y) * 3.0 + time * 0.4) * 0.5 + 0.5;
         
-        // Mouse interaction - only affects pixels near mouse position
-        vec2 mouseUv = mouse / resolution.xy;
-        float dist = distance(uv, mouseUv);
-        
-        // Sharp falloff - only affects nearby pixels
-        float mouseInfluence = 0.0;
-        if (dist < 0.3) {
-          float ripple = sin(dist * 20.0 - time * 3.0) / (1.0 + dist * 5.0);
-          mouseInfluence = ripple * (1.0 - dist * 3.0);
-        }
-        
         // Create dynamic color mixing
         vec3 color = vec3(0.0);
         
@@ -65,9 +49,6 @@ export default function ShaderBackground() {
         color += vec3(0.1, 0.05, 0.2) * wave1;
         color += vec3(0.05, 0.1, 0.3) * wave2;
         color += vec3(0.15, 0.08, 0.25) * wave3;
-        
-        // Add mouse interaction only where mouse is
-        color += vec3(0.3, 0.6, 0.7) * mouseInfluence * 0.8;
         
         // Add some chromatic aberration
         color.r += sin(time * 0.3 + uv.y * 5.0) * 0.1;
@@ -118,17 +99,6 @@ export default function ShaderBackground() {
     // Get uniform locations
     const resolutionLocation = gl.getUniformLocation(program, 'resolution')
     const timeLocation = gl.getUniformLocation(program, 'time')
-    const mouseLocation = gl.getUniformLocation(program, 'mouse')
-
-    let mouseX = canvas.width / 2
-    let mouseY = canvas.height / 2
-
-    // Track mouse movement
-    const handleMouseMove = (e) => {
-      mouseX = e.clientX * (window.devicePixelRatio || 1)
-      mouseY = (window.innerHeight - e.clientY) * (window.devicePixelRatio || 1)
-    }
-    window.addEventListener('mousemove', handleMouseMove)
 
     // Animation loop
     let startTime = Date.now()
@@ -138,7 +108,6 @@ export default function ShaderBackground() {
       
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height)
       gl.uniform1f(timeLocation, elapsed)
-      gl.uniform2f(mouseLocation, mouseX, mouseY)
       
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       frameId = requestAnimationFrame(animate)
@@ -147,7 +116,6 @@ export default function ShaderBackground() {
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)
-      window.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(frameId)
     }
   }, [])
