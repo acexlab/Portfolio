@@ -1,0 +1,54 @@
+Project: Personal Portfolio Website (explained for a 5-year-old)
+
+1) What is this?
+- This is a website that shows who Jonadh is and the cool things he can make.
+- A website is like a digital poster you can open in a web browser (Chrome, Edge).
+
+2) Imagine the website like a picture book with pages:
+- Home: The first page that says "Hi" and shows what Jonadh is building.
+- About: A page that tells who Jonadh is, where he lives, and what he likes.
+- Works: A page that shows the projects Jonadh has made (like a school project gallery).
+- Skills: A page that shows what Jonadh knows how to do (like a report card with progress bars).
+- Contact: A page to send Jonadh a message or copy his email so you can talk to him.
+
+3) How the website is made (simple steps):
+- We use a tool called React. Think of React as a set of LEGO instructions.
+- Each page is a LEGO block (a small file) that has pieces like headings, text, and buttons.
+- The computer follows these instructions to put the page together and show it on the screen.
+
+4) Words that are used and what they mean:
+- Component: A small part of the page (like a LEGO brick). Each page is a component.
+- JSX: Special code that looks like HTML. It's how we draw the page using React.
+- Props: Small notes we pass to components. Example: the project title and picture are props.
+- State: A memory inside a component. Example: the Contact page remembers if the email was copied.
+
+5) Extra magical things:
+- Shader Background: Animated colors behind the page that make it look cool (like moving lights).
+- Routing: When you click a link (like "Works"), the site shows a new page without reloading — it's like turning a page in a book.
+- Form: The message box is a tiny letter you can send. The website can send that letter to an email service.
+
+6) How to try it on your computer (adult steps):
+- Install Node.js and Git.
+- Open a terminal (PowerShell) and run:
+  npm install
+  npm run dev
+- Open the browser at the address shown (usually http://localhost:5173).
+
+7) If something breaks (easy troubleshooting):
+- If the page is white, check the terminal for errors — it usually tells you what file has a problem.
+- If an image is missing, the terminal or browser console will show a 404 (file not found).
+
+8) How to change the words on the page (easy edit):
+- Find files in `src/pages/` and open a file like `Home.jsx`.
+- Change the text between <h1>...</h1> or <p>...</p>, save, and the site updates.
+
+9) Who can learn from this?
+- Kids: can learn that websites are like books made of blocks (components).
+- Beginners: can learn where to change text and how to add a new page.
+- Teachers: can use this as a simple demo of modern web apps.
+
+10) Why it matters:
+- Making a portfolio website helps show your projects to other people (employers, classmates).
+- You can keep improving it by adding new projects, colors, and animations.
+
+-- End --
