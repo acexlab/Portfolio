@@ -7,7 +7,7 @@ export default function Home() {
       <div className="hero-badge">Computer Science Student</div>
 
       <h1 className="hero-title">
-        Hi, I&apos;m <span className="hero-title-line2">Jonadh E. F.</span>
+        Hi, I'm <span className="hero-title-line2">Jonadh E. F.</span>
       </h1>
 
       <img

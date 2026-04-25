@@ -8,7 +8,7 @@ export default function About() {
       <div style={{ marginBottom: '2rem' }} className="animate-on-scroll delay-1">
         <h3>Profile</h3>
         <ul>
-          <li><strong>Name:</strong> Jonadh E. F</li>
+          <li><strong>Name:</strong> Jonadh E. F.</li>
           <li><strong>Role:</strong> Computer Science Student</li>
           <li><strong>Address:</strong> Thrissur, Kerala</li>
           <li><strong>Email:</strong> jonadhef@gmail.com</li>
