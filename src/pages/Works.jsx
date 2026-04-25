@@ -5,15 +5,15 @@ import sample from '../assets/react.svg'
 export default function Works() {
   const projects = [
     {
-      title: 'Disaster Relief Camp Locator',
+      title: 'Disaster Relief Camp Locator and Resource Management System (Mini Project)',
       img: sample,
-      desc: 'A full-featured system to locate disaster relief camps and manage resources efficiently. Built with HTML, CSS, JavaScript with plans for full-stack implementation.',
+      desc: 'Web application for managing resources and locating nearby relief camps, enhancing emergency response. Technologies: Vite, JavaScript, Node.js, MongoDB, Express, Leaflet API.',
       deptLink: 'https://github.com/acexlab/Portfolio',
     },
     {
-      title: 'Placement Cell Website',
+      title: 'SpeechWell - A Tool for Speech Therapy and Language Learners (Main Project, Ongoing)',
       img: sample,
-      desc: 'Full-stack web platform with Student, Volunteer, and Admin roles. Features include student registration, question management, and admin approval system.',
+      desc: 'Interactive web app for speech therapy and language learning, offering guided voice exercises, real-time feedback, progress tracking, and accessibility features. Technologies: React, HTML, CSS, JavaScript, Node.js, Express, MongoDB, Python.',
       deptLink: 'https://github.com/acexlab/Portfolio',
     },
   ]

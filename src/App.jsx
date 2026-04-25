@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ShaderBackground from './components/ShaderBackground'
@@ -10,6 +10,8 @@ import Works from './pages/Works'
 import Contact from './pages/Contact'
 
 export default function App() {
+  const { pathname } = useLocation()
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -22,10 +24,12 @@ export default function App() {
       },
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     )
+
     const targets = document.querySelectorAll('.animate-on-scroll')
     targets.forEach((el) => observer.observe(el))
+
     return () => observer.disconnect()
-  }, [])
+  }, [pathname])
 
   return (
     <>
@@ -39,6 +43,7 @@ export default function App() {
             <Route path="/skills" element={<Skills />} />
             <Route path="/works" element={<Works />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
         <Footer />

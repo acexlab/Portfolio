@@ -4,6 +4,8 @@ export default function Contact() {
   const [copied, setCopied] = useState(false)
   const [status, setStatus] = useState('')
   const email = 'jonadhef@gmail.com'
+  const phone = '+91 8848134951'
+  const linkedin = 'https://www.linkedin.com/in/jonadhef'
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(email)
@@ -21,16 +23,21 @@ export default function Contact() {
     <section className="animate-on-scroll">
       <h2>Let's Connect</h2>
       <p>
-        I'm open to internships, freelance web projects, student tech collaborations, and project development support.
+        Reach out for internships, collaborations, and project opportunities.
       </p>
 
       <div style={{ marginBottom: '2rem', marginTop: '2rem' }} className="animate-on-scroll delay-1">
-        <h3>Open To:</h3>
+        <h3>Contact Details</h3>
         <ul>
-          <li>💼 Internships</li>
-          <li>💻 Freelance Web Projects</li>
-          <li>🤝 Student Tech Collaborations</li>
-          <li>🚀 Project Development Support</li>
+          <li><strong>Phone:</strong> {phone}</li>
+          <li><strong>Email:</strong> {email}</li>
+          <li><strong>Address:</strong> Thrissur, Kerala</li>
+          <li>
+            <strong>LinkedIn:</strong>{' '}
+            <a href={linkedin} target="_blank" rel="noreferrer">
+              linkedin.com/in/jonadhef
+            </a>
+          </li>
         </ul>
       </div>
 

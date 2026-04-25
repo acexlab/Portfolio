@@ -4,28 +4,30 @@ import { Link } from 'react-router-dom'
 export default function Home() {
   return (
     <section className="animate-on-scroll">
-      <div className="hero-badge">
-        Available for work
-      </div>
+      <div className="hero-badge">Computer Science Student</div>
 
       <h1 className="hero-title">
-        Hi, I'm{' '}
-        <span className="hero-title-line2">Jonadh E. F.</span>
+        Hi, I&apos;m <span className="hero-title-line2">Jonadh E. F.</span>
       </h1>
 
+      <img
+        src="https://github.com/user-attachments/assets/f43bef4a-60ae-42f8-ba4f-26e0484991b9"
+        alt="Jonadh E. F."
+        style={{ width: '140px', borderRadius: '12px', marginBottom: '1.25rem' }}
+      />
+
       <p style={{ fontSize: '1.1rem', maxWidth: '600px' }}>
-        A passionate 20-year-old undergraduate student from India — full-stack web developer,
-        software engineering enthusiast, and content creator building real-world projects
-        with modern technologies.
+        Enthusiastic Computer Science Engineering student with strong problem-solving ability,
+        adaptability, and a passion for technology.
       </p>
 
       <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-        <h3>Currently Building:</h3>
+        <h3>Highlights</h3>
         <ul>
-          <li>✅ Full-Stack Web Development Skills</li>
-          <li>✅ Personal Portfolio Website (Live on Vercel)</li>
-          <li>✅ Real-World Academic Projects</li>
-          <li>✅ YouTube Gaming Channel (eFootball Content)</li>
+          <li>B.Tech in Computer Science (2022 - 2026)</li>
+          <li>CGPA: 7.63 / 10 (7th Semester)</li>
+          <li>Built web applications with React, Node.js, Express, and MongoDB</li>
+          <li>Internship experience at High Court of Kerala</li>
         </ul>
       </div>
 
@@ -40,16 +42,16 @@ export default function Home() {
 
       <div className="hero-stats">
         <div className="stat-item">
-          <div className="stat-num">2+</div>
+          <div className="stat-num">2</div>
           <div className="stat-label">Projects</div>
         </div>
         <div className="stat-item">
-          <div className="stat-num">5+</div>
-          <div className="stat-label">Technologies</div>
+          <div className="stat-num">3</div>
+          <div className="stat-label">Languages</div>
         </div>
         <div className="stat-item">
-          <div className="stat-num">20</div>
-          <div className="stat-label">Years Old</div>
+          <div className="stat-num">2026</div>
+          <div className="stat-label">Graduation</div>
         </div>
       </div>
     </section>
