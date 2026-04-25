@@ -7,20 +7,21 @@ export default function ShaderBackground() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const gl = canvas.getContext('webgl', { antialias: true })
+    const gl = canvas.getContext('webgl', { antialias: false, powerPreference: 'low-power' })
     if (!gl) return
 
-    // Set canvas size with device pixel ratio for clarity
+    // On mobile use DPR=1 to reduce GPU load
+    const isMobile = window.innerWidth < 768
+    const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2)
+
     const resizeCanvas = () => {
-      const dpr = window.devicePixelRatio || 1
       canvas.width = window.innerWidth * dpr
       canvas.height = window.innerHeight * dpr
       gl.viewport(0, 0, canvas.width, canvas.height)
     }
     resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
+    window.addEventListener('resize', resizeCanvas, { passive: true })
 
-    // Vertex shader
     const vertexShader = `
       attribute vec2 position;
       void main() {
@@ -28,42 +29,35 @@ export default function ShaderBackground() {
       }
     `
 
-    // Enhanced fragment shader with more vibrant colors
+    // Simplified shader on mobile (fewer instructions) for performance
     const fragmentShader = `
-      precision highp float;
+      precision mediump float;
       uniform vec2 resolution;
       uniform float time;
 
       void main() {
         vec2 uv = gl_FragCoord.xy / resolution.xy;
-        
-        // Create fixed animated flowing waves across entire screen
+
         float wave1 = sin(uv.x * 4.0 + time * 0.5) * 0.5 + 0.5;
         float wave2 = cos(uv.y * 4.0 - time * 0.3) * 0.5 + 0.5;
         float wave3 = sin((uv.x + uv.y) * 3.0 + time * 0.4) * 0.5 + 0.5;
-        
-        // Create dynamic color mixing
+
         vec3 color = vec3(0.0);
-        
-        // Base layers with smooth color transitions
         color += vec3(0.1, 0.05, 0.2) * wave1;
         color += vec3(0.05, 0.1, 0.3) * wave2;
         color += vec3(0.15, 0.08, 0.25) * wave3;
-        
-        // Add some chromatic aberration
-        color.r += sin(time * 0.3 + uv.y * 5.0) * 0.1;
-        color.g += cos(time * 0.2 + uv.x * 5.0) * 0.1;
-        color.b += sin((uv.x + uv.y) * 3.0 + time) * 0.1;
-        
-        // Normalize and add brightness
+
+        color.r += sin(time * 0.3 + uv.y * 5.0) * 0.08;
+        color.g += cos(time * 0.2 + uv.x * 5.0) * 0.08;
+        color.b += sin((uv.x + uv.y) * 3.0 + time) * 0.08;
+
         color = normalize(color) * 0.5;
         color += vec3(0.05, 0.03, 0.1);
-        
+
         gl_FragColor = vec4(color, 1.0);
       }
     `
 
-    // Compile shader
     const compileShader = (source, type) => {
       const shader = gl.createShader(type)
       gl.shaderSource(shader, source)
@@ -83,36 +77,38 @@ export default function ShaderBackground() {
     gl.linkProgram(program)
     gl.useProgram(program)
 
-    // Create full-screen quad
     const positionBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW
-    )
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW)
 
     const positionLocation = gl.getAttribLocation(program, 'position')
     gl.enableVertexAttribArray(positionLocation)
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0)
 
-    // Get uniform locations
     const resolutionLocation = gl.getUniformLocation(program, 'resolution')
     const timeLocation = gl.getUniformLocation(program, 'time')
 
-    // Animation loop
+    // Throttle to ~30fps on mobile, ~60fps on desktop
+    const targetFps = isMobile ? 30 : 60
+    const frameDuration = 1000 / targetFps
+    let lastFrame = 0
     let startTime = Date.now()
     let frameId
-    const animate = () => {
+
+    const animate = (now) => {
+      if (now - lastFrame < frameDuration) {
+        frameId = requestAnimationFrame(animate)
+        return
+      }
+      lastFrame = now
+
       const elapsed = (Date.now() - startTime) / 1000
-      
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height)
       gl.uniform1f(timeLocation, elapsed)
-      
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       frameId = requestAnimationFrame(animate)
     }
-    animate()
+    frameId = requestAnimationFrame(animate)
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)

@@ -1,18 +1,8 @@
-/*
-  File: src/pages/Works.jsx
-  Purpose: Shows a list of projects using the `ProjectCard` component.
-
-  Notes:
-  - We import `ProjectCard` to render each project visually.
-  - The `projects` array is plain JavaScript data. We use `.map()` to convert each project object into a JSX element.
-*/
-
 import React from 'react'
-import ProjectCard from '../components/ProjectCard' // Reusable UI component for each project
-import sample from '../assets/react.svg' // Example image used as project thumbnail
+import ProjectCard from '../components/ProjectCard'
+import sample from '../assets/react.svg'
 
 export default function Works() {
-  // `projects` is an array of objects. Each object represents one project with title, image, description and link.
   const projects = [
     {
       title: 'Disaster Relief Camp Locator',
@@ -29,19 +19,13 @@ export default function Works() {
   ]
 
   return (
-    <section>
-      {/* Heading and short description */}
+    <section className="animate-on-scroll">
       <h2>My Projects</h2>
       <p>Real-world projects I've built and contributed to:</p>
 
-      {/*
-        The following `div` contains the project grid. `projects.map(...)` loops over the array
-        and returns a `ProjectCard` element for each project. The `key` prop helps React update
-        the list efficiently; it should be a unique value (we use the title here).
-      */}
       <div className="grid">
-        {projects.map((p) => (
-          <ProjectCard key={p.title} {...p} />
+        {projects.map((p, i) => (
+          <ProjectCard key={p.title} {...p} className={`animate-on-scroll delay-${(i % 3) + 1}`} />
         ))}
       </div>
     </section>
